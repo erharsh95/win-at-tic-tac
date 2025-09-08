@@ -57,6 +57,19 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        game: {
+          grid: "hsl(var(--game-grid))",
+          cell: "hsl(var(--game-cell))",
+          "cell-hover": "hsl(var(--game-cell-hover))",
+          "player-x": "hsl(var(--player-x))",
+          "player-o": "hsl(var(--player-o))",
+          "winner-glow": "hsl(var(--winner-glow))",
+        },
+      },
+      backgroundImage: {
+        "gradient-primary": "var(--gradient-primary)",
+        "gradient-background": "var(--gradient-background)",
+        "gradient-card": "var(--gradient-card)",
       },
       borderRadius: {
         lg: "var(--radius)",
