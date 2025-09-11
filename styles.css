@@ -7,12 +7,30 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(120, 219, 255, 0.3) 0%, transparent 50%),
+        linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #764ba2 100%);
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+    opacity: 0.3;
+    pointer-events: none;
 }
 
 .container {
@@ -22,22 +40,46 @@ body {
 }
 
 .card {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(20px);
-    border-radius: 20px;
+    border-radius: 24px;
     padding: 40px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+    border-radius: 24px;
+    pointer-events: none;
+}
+
+.card > * {
+    position: relative;
+    z-index: 1;
 }
 
 .title {
     text-align: center;
     font-size: 2.5rem;
     margin-bottom: 30px;
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    background: linear-gradient(135deg, #ffffff, #e0e7ff, #c7d2fe);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    font-weight: 700;
 }
 
 /* Selection Screen Styles */
@@ -47,9 +89,11 @@ body {
 
 .section h2 {
     margin-bottom: 20px;
-    color: #333;
+    color: rgba(255, 255, 255, 0.9);
     text-align: center;
     font-size: 1.3rem;
+    font-weight: 600;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .mode-buttons {
@@ -61,27 +105,46 @@ body {
 
 .mode-btn {
     padding: 15px 20px;
-    border: 2px solid #ddd;
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 15px;
-    background: white;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    color: rgba(255, 255, 255, 0.9);
     font-size: 1.1rem;
     cursor: pointer;
     transition: all 0.3s ease;
     font-weight: 500;
+    position: relative;
+    overflow: hidden;
+}
+
+.mode-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
 }
 
 .mode-btn:hover {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    border-color: transparent;
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
     transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.mode-btn:hover::before {
+    left: 100%;
 }
 
 .mode-btn.selected {
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    background: rgba(255, 255, 255, 0.25);
     color: white;
-    border-color: transparent;
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 #playerNamesSection {
@@ -109,39 +172,68 @@ body {
 
 .input-group label {
     font-weight: 500;
-    color: #333;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .input-group input {
     padding: 12px 15px;
-    border: 2px solid #ddd;
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 10px;
     font-size: 1rem;
-    transition: border-color 0.3s ease;
-    background: white;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    color: white;
+}
+
+.input-group input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
 }
 
 .input-group input:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
 }
 
 .start-btn {
     width: 100%;
     padding: 15px;
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
     color: white;
-    border: none;
+    border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 15px;
     font-size: 1.2rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.start-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
 }
 
 .start-btn:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.start-btn:hover:not(:disabled)::before {
+    left: 100%;
 }
 
 .start-btn:disabled {
