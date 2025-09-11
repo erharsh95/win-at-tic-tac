@@ -21,8 +21,7 @@ body {
     margin: 0 auto;
 }
 
-/* Selection Page Styles */
-.selection-card, .game-card {
+.card {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
     border-radius: 20px;
@@ -41,8 +40,12 @@ body {
     background-clip: text;
 }
 
-.game-mode-section h2,
-.player-names-section h2 {
+/* Selection Screen Styles */
+.section {
+    margin-bottom: 30px;
+}
+
+.section h2 {
     margin-bottom: 20px;
     color: #333;
     text-align: center;
@@ -81,14 +84,13 @@ body {
     border-color: transparent;
 }
 
-.player-names-section {
-    margin-bottom: 30px;
+#playerNamesSection {
     opacity: 0.5;
     pointer-events: none;
     transition: all 0.3s ease;
 }
 
-.player-names-section.active {
+#playerNamesSection.active {
     opacity: 1;
     pointer-events: all;
 }
@@ -332,7 +334,7 @@ body {
         padding: 10px;
     }
     
-    .selection-card, .game-card {
+    .card {
         padding: 20px;
     }
     

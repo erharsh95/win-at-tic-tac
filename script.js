@@ -7,7 +7,17 @@ document.addEventListener('DOMContentLoaded', function() {
     let scores = { X: 0, O: 0 };
     let players = { X: 'Player 1', O: 'Player 2' };
     
-    // DOM elements
+    // Selection screen elements
+    const selectionScreen = document.getElementById('selectionScreen');
+    const gameScreen = document.getElementById('gameScreen');
+    const modeButtons = document.querySelectorAll('.mode-btn');
+    const playerNamesSection = document.getElementById('playerNamesSection');
+    const player2Group = document.getElementById('player2Group');
+    const startButton = document.getElementById('startGame');
+    const player1Input = document.getElementById('player1');
+    const player2Input = document.getElementById('player2');
+    
+    // Game screen elements
     const gameBoard = document.getElementById('gameBoard');
     const gameStatus = document.getElementById('gameStatus');
     const currentPlayerSpan = document.getElementById('currentPlayer');
@@ -17,7 +27,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const player2Score = document.getElementById('player2Score');
     const player1Info = document.getElementById('player1Info');
     const player2Info = document.getElementById('player2Info');
-    const cells = document.querySelectorAll('.cell');
+    const backBtn = document.getElementById('backBtn');
+    const newGameBtn = document.getElementById('newGameBtn');
+    const resetScoresBtn = document.getElementById('resetScoresBtn');
+    
+    let selectedMode = null;
     
     // Winning combinations
     const winConditions = [
@@ -26,38 +40,89 @@ document.addEventListener('DOMContentLoaded', function() {
         [0, 4, 8], [2, 4, 6] // diagonals
     ];
     
-    // Initialize game
-    function initGame() {
-        const gameData = JSON.parse(sessionStorage.getItem('gameData'));
+    // Selection screen logic
+    modeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            modeButtons.forEach(btn => btn.classList.remove('selected'));
+            this.classList.add('selected');
+            selectedMode = this.dataset.mode;
+            playerNamesSection.classList.add('active');
+            
+            if (selectedMode === 'pvc') {
+                player2Group.style.display = 'none';
+                player2Input.value = 'Computer';
+            } else {
+                player2Group.style.display = 'block';
+                player2Input.value = '';
+            }
+            
+            updateStartButton();
+        });
+    });
+    
+    player1Input.addEventListener('input', updateStartButton);
+    player2Input.addEventListener('input', updateStartButton);
+    
+    function updateStartButton() {
+        const player1Valid = player1Input.value.trim().length > 0;
+        const player2Valid = selectedMode === 'pvc' || player2Input.value.trim().length > 0;
+        startButton.disabled = !(selectedMode && player1Valid && player2Valid);
+    }
+    
+    startButton.addEventListener('click', function() {
+        if (startButton.disabled) return;
         
-        if (!gameData) {
-            window.location.href = 'index.html';
-            return;
+        gameMode = selectedMode;
+        players.X = player1Input.value.trim() || 'Player 1';
+        players.O = selectedMode === 'pvc' ? 'Computer' : (player2Input.value.trim() || 'Player 2');
+        
+        showGameScreen();
+    });
+    
+    // Enter key support for selection screen
+    document.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter' && !startButton.disabled && selectionScreen.style.display !== 'none') {
+            startButton.click();
         }
+    });
+    
+    // Game screen logic
+    function showGameScreen() {
+        selectionScreen.style.display = 'none';
+        gameScreen.style.display = 'block';
         
-        gameMode = gameData.mode;
-        players.X = gameData.player1;
-        players.O = gameData.player2;
-        
-        // Update UI
         player1Name.textContent = players.X;
         player2Name.textContent = players.O;
         
-        updateDisplay();
-        
-        // Add event listeners to cells
+        initGame();
+    }
+    
+    function showSelectionScreen() {
+        gameScreen.style.display = 'none';
+        selectionScreen.style.display = 'block';
+        resetGame();
+        scores = { X: 0, O: 0 };
+    }
+    
+    backBtn.addEventListener('click', showSelectionScreen);
+    
+    function initGame() {
+        const cells = gameBoard.querySelectorAll('.cell');
         cells.forEach((cell, index) => {
             cell.addEventListener('click', () => handleCellClick(index));
         });
+        
+        updateDisplay();
+        updateScores();
     }
     
     function handleCellClick(index) {
+        const cells = gameBoard.querySelectorAll('.cell');
         if (board[index] !== '' || !gameActive) return;
         
         makeMove(index, currentPlayer);
         
         if (gameActive && gameMode === 'pvc' && currentPlayer === 'O') {
-            // Computer's turn
             setTimeout(() => {
                 const computerMove = getBestMove();
                 makeMove(computerMove, 'O');
@@ -66,6 +131,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function makeMove(index, player) {
+        const cells = gameBoard.querySelectorAll('.cell');
         board[index] = player;
         const cell = cells[index];
         cell.textContent = player;
@@ -79,7 +145,6 @@ document.addEventListener('DOMContentLoaded', function() {
             updateScores();
             gameStatus.innerHTML = `🎉 ${players[player]} wins!`;
             
-            // Auto restart after 2 seconds
             setTimeout(() => {
                 resetGame();
             }, 2000);
@@ -87,7 +152,6 @@ document.addEventListener('DOMContentLoaded', function() {
             gameActive = false;
             gameStatus.innerHTML = `🤝 It's a draw! Restarting...`;
             
-            // Auto restart on draw
             setTimeout(() => {
                 resetGame();
             }, 1500);
@@ -105,6 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function highlightWinningCells() {
+        const cells = gameBoard.querySelectorAll('.cell');
         winConditions.forEach(condition => {
             const [a, b, c] = condition;
             if (board[a] && board[a] === board[b] && board[a] === board[c]) {
@@ -118,7 +183,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateDisplay() {
         currentPlayerSpan.textContent = players[currentPlayer];
         
-        // Update active player highlight
         player1Info.classList.toggle('active', currentPlayer === 'X');
         player2Info.classList.toggle('active', currentPlayer === 'O');
         
@@ -138,7 +202,7 @@ document.addEventListener('DOMContentLoaded', function() {
         player2Score.textContent = scores.O;
     }
     
-    // AI Logic - Minimax Algorithm
+    // AI Logic - Minimax Algorithm (Unbeatable)
     function getBestMove() {
         let bestScore = -Infinity;
         let bestMove = 0;
@@ -192,7 +256,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function checkGameResult() {
-        // Check for winner
         for (let condition of winConditions) {
             const [a, b, c] = condition;
             if (board[a] && board[a] === board[b] && board[a] === board[c]) {
@@ -200,7 +263,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
         
-        // Check for draw
         if (board.every(cell => cell !== '')) {
             return 'draw';
         }
@@ -209,28 +271,25 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Game controls
-    window.resetGame = function() {
+    function resetGame() {
         board = ['', '', '', '', '', '', '', '', ''];
         currentPlayer = 'X';
         gameActive = true;
         
+        const cells = gameBoard.querySelectorAll('.cell');
         cells.forEach(cell => {
             cell.textContent = '';
             cell.className = 'cell';
         });
         
         updateDisplay();
-    };
+    }
     
-    window.resetScores = function() {
+    function resetScores() {
         scores = { X: 0, O: 0 };
         updateScores();
-    };
+    }
     
-    window.goBack = function() {
-        window.location.href = 'index.html';
-    };
-    
-    // Initialize the game
-    initGame();
+    newGameBtn.addEventListener('click', resetGame);
+    resetScoresBtn.addEventListener('click', resetScores);
 });
