@@ -7,11 +7,7 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: 
-        radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
-        radial-gradient(circle at 40% 80%, rgba(120, 219, 255, 0.3) 0%, transparent 50%),
-        linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #764ba2 100%);
+    background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -21,16 +17,118 @@ body {
     overflow: hidden;
 }
 
-body::before {
-    content: '';
-    position: absolute;
+/* Animated RGB Background Elements */
+.rgb-bg {
+    position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-    opacity: 0.3;
+    width: 100%;
+    height: 100%;
     pointer-events: none;
+    z-index: 0;
+}
+
+.rgb-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.6;
+    animation: float 20s infinite ease-in-out;
+}
+
+.rgb-orb:nth-child(1) {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255, 0, 150, 0.8), transparent);
+    top: 10%;
+    left: 10%;
+    animation-delay: 0s;
+    animation-duration: 25s;
+}
+
+.rgb-orb:nth-child(2) {
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, rgba(0, 255, 150, 0.8), transparent);
+    top: 60%;
+    right: 15%;
+    animation-delay: -8s;
+    animation-duration: 30s;
+}
+
+.rgb-orb:nth-child(3) {
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(150, 100, 255, 0.8), transparent);
+    bottom: 20%;
+    left: 60%;
+    animation-delay: -15s;
+    animation-duration: 20s;
+}
+
+.rgb-orb:nth-child(4) {
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, rgba(255, 200, 0, 0.6), transparent);
+    top: 30%;
+    right: 40%;
+    animation-delay: -5s;
+    animation-duration: 35s;
+}
+
+.rgb-orb:nth-child(5) {
+    width: 180px;
+    height: 180px;
+    background: radial-gradient(circle, rgba(0, 200, 255, 0.7), transparent);
+    bottom: 10%;
+    right: 20%;
+    animation-delay: -12s;
+    animation-duration: 22s;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+    }
+    25% {
+        transform: translate(100px, -50px) rotate(90deg) scale(1.1);
+    }
+    50% {
+        transform: translate(-50px, 100px) rotate(180deg) scale(0.9);
+    }
+    75% {
+        transform: translate(-100px, -100px) rotate(270deg) scale(1.2);
+    }
+}
+
+/* Particle system */
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: particle-float 15s infinite linear;
+}
+
+@keyframes particle-float {
+    0% {
+        transform: translateY(100vh) translateX(0) scale(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+        transform: translateY(90vh) translateX(10px) scale(1);
+    }
+    90% {
+        opacity: 1;
+        transform: translateY(10vh) translateX(-10px) scale(1);
+    }
+    100% {
+        transform: translateY(-10vh) translateX(0) scale(0);
+        opacity: 0;
+    }
 }
 
 .container {
@@ -40,17 +138,29 @@ body::before {
 }
 
 .card {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(20px);
+    background: rgba(15, 15, 35, 0.25);
+    backdrop-filter: blur(25px);
     border-radius: 24px;
     padding: 40px;
     box-shadow: 
-        0 8px 32px rgba(0, 0, 0, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2),
-        inset 0 -1px 0 rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.18);
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.05),
+        0 0 60px rgba(255, 100, 200, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     position: relative;
     overflow: hidden;
+    z-index: 1;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.08),
+        0 0 80px rgba(255, 100, 200, 0.2);
+    transform: translateY(-5px);
 }
 
 .card::before {
@@ -105,17 +215,18 @@ body::before {
 
 .mode-btn {
     padding: 15px 20px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 15px;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
     color: rgba(255, 255, 255, 0.9);
     font-size: 1.1rem;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     font-weight: 500;
     position: relative;
     overflow: hidden;
+    transform: perspective(1000px) rotateX(0deg);
 }
 
 .mode-btn::before {
@@ -130,10 +241,13 @@ body::before {
 }
 
 .mode-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.15);
     border-color: rgba(255, 255, 255, 0.3);
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px) perspective(1000px) rotateX(5deg);
+    box-shadow: 
+        0 15px 35px rgba(0, 0, 0, 0.3),
+        0 0 30px rgba(255, 100, 200, 0.3);
+    color: white;
 }
 
 .mode-btn:hover::before {
@@ -141,10 +255,14 @@ body::before {
 }
 
 .mode-btn.selected {
-    background: rgba(255, 255, 255, 0.25);
+    background: linear-gradient(135deg, rgba(255, 100, 200, 0.3), rgba(150, 100, 255, 0.3));
     color: white;
     border-color: rgba(255, 255, 255, 0.4);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.3),
+        0 0 40px rgba(255, 100, 200, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
 }
 
 #playerNamesSection {
@@ -421,13 +539,25 @@ body::before {
 }
 
 /* Mobile Responsive */
+/* Enhanced responsive design */
 @media (max-width: 480px) {
     body {
         padding: 10px;
     }
     
+    .rgb-orb {
+        filter: blur(40px);
+    }
+    
+    .rgb-orb:nth-child(1) { width: 200px; height: 200px; }
+    .rgb-orb:nth-child(2) { width: 150px; height: 150px; }
+    .rgb-orb:nth-child(3) { width: 120px; height: 120px; }
+    .rgb-orb:nth-child(4) { width: 180px; height: 180px; }
+    .rgb-orb:nth-child(5) { width: 100px; height: 100px; }
+    
     .card {
         padding: 20px;
+        border-radius: 20px;
     }
     
     .title {
@@ -436,16 +566,31 @@ body::before {
     }
     
     .mode-buttons {
-        gap: 10px;
+        gap: 12px;
     }
     
     .mode-btn {
-        padding: 12px 15px;
+        padding: 14px 16px;
         font-size: 1rem;
+        border-radius: 12px;
+    }
+    
+    .mode-btn:hover {
+        transform: translateY(-2px) perspective(1000px) rotateX(3deg);
     }
     
     .name-inputs {
         gap: 12px;
+    }
+    
+    .input-group input {
+        padding: 14px 15px;
+        font-size: 1rem;
+    }
+    
+    .start-btn {
+        padding: 14px;
+        font-size: 1.1rem;
     }
     
     .players-info {
@@ -486,6 +631,28 @@ body::before {
     
     .back-btn {
         align-self: flex-start;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+    .container {
+        max-width: 420px;
+    }
+    
+    .rgb-orb {
+        filter: blur(60px);
+    }
+    
+    .card {
+        padding: 35px;
+    }
+    
+    .mode-btn:hover {
+        transform: translateY(-3px) perspective(1000px) rotateX(4deg);
+    }
+    
+    .game-board {
+        max-width: 280px;
     }
 }
 
