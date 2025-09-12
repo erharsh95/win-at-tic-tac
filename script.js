@@ -61,7 +61,7 @@ function init() {
     const newGameBtn = document.getElementById('newGameBtn');
     const resetScoresBtn = document.getElementById('resetScoresBtn');
     
-    let selectedMode = null;
+    let selectedMode = 'pvp';
     
     // Winning combinations
     const winConditions = [
@@ -108,9 +108,8 @@ function init() {
     player2Input.addEventListener('input', updateStartButton);
     
     function updateStartButton() {
-        const player1Valid = player1Input.value.trim().length > 0;
-        const player2Valid = selectedMode === 'pvc' || player2Input.value.trim().length > 0;
-        startButton.disabled = !(selectedMode && player1Valid && player2Valid);
+        // Allow starting as soon as a mode is selected; names are optional
+        startButton.disabled = !selectedMode;
     }
     
     startButton.addEventListener('click', function() {
