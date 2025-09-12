@@ -26,7 +26,7 @@ function addInteractionEffects() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+function init() {
     createParticles();
     addInteractionEffects();
     // Game state
@@ -92,22 +92,34 @@ document.addEventListener('DOMContentLoaded', function() {
 
     console.log('UI ready. modeButtons:', modeButtons.length);
     modeButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            handleModeSelect(this);
+        ['click','touchend','pointerup'].forEach(evt => {
+            button.addEventListener(evt, function (e) {
+                e.preventDefault();
+                handleModeSelect(this);
+            }, { passive: false });
         });
     });
 
-    // Fallback delegation in case initial listeners fail
-    document.addEventListener('click', (e) => {
-        const btn = e.target.closest?.('.mode-btn');
-        if (btn) handleModeSelect(btn);
+    // Fallback delegation
+    ;['click','touchend','pointerup'].forEach(evt => {
+        document.addEventListener(evt, (e) => {
+            const btn = e.target.closest && e.target.closest('.mode-btn');
+            if (btn) {
+                e.preventDefault();
+                handleModeSelect(btn);
+            }
+        }, { passive: false });
     });
+
+    // Default to PvP for convenience
+    const defaultBtn = document.querySelector('.mode-btn[data-mode="pvp"]');
+    if (defaultBtn) handleModeSelect(defaultBtn);
 
     // Ensure initial state
     updateStartButton();
     
-    player1Input.addEventListener('input', updateStartButton);
-    player2Input.addEventListener('input', updateStartButton);
+    ['input','change','keyup','paste'].forEach(evt => player1Input.addEventListener(evt, updateStartButton));
+    ['input','change','keyup','paste'].forEach(evt => player2Input.addEventListener(evt, updateStartButton));
     
     function updateStartButton() {
         const player1Valid = player1Input.value.trim().length > 0;
@@ -338,4 +350,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     newGameBtn.addEventListener('click', resetGame);
     resetScoresBtn.addEventListener('click', resetScores);
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
