@@ -34,6 +34,7 @@ body {
     filter: blur(80px);
     opacity: 0.6;
     animation: float 20s infinite ease-in-out;
+    pointer-events: none;
 }
 
 .rgb-orb:nth-child(1) {
