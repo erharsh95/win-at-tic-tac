@@ -136,6 +136,8 @@ body {
     width: 100%;
     max-width: 500px;
     margin: 0 auto;
+    position: relative;
+    z-index: 2;
 }
 
 .card {
@@ -267,14 +269,13 @@ body {
 }
 
 #playerNamesSection {
-    opacity: 0.5;
-    pointer-events: none;
+    opacity: 0.85;
     transition: all 0.3s ease;
+    pointer-events: auto;
 }
 
 #playerNamesSection.active {
     opacity: 1;
-    pointer-events: all;
 }
 
 .name-inputs {

@@ -71,24 +71,40 @@ document.addEventListener('DOMContentLoaded', function() {
     ];
     
     // Selection screen logic
+    function handleModeSelect(buttonEl) {
+        if (!buttonEl) return;
+        modeButtons.forEach(btn => btn.classList.remove('selected'));
+        buttonEl.classList.add('selected');
+        selectedMode = buttonEl.dataset.mode;
+        playerNamesSection.classList.add('active');
+
+        if (selectedMode === 'pvc') {
+            player2Group.style.display = 'none';
+            player2Input.value = 'Computer';
+        } else {
+            player2Group.style.display = 'block';
+            player2Input.value = '';
+        }
+
+        updateStartButton();
+        console.log('Mode selected:', selectedMode);
+    }
+
+    console.log('UI ready. modeButtons:', modeButtons.length);
     modeButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            modeButtons.forEach(btn => btn.classList.remove('selected'));
-            this.classList.add('selected');
-            selectedMode = this.dataset.mode;
-            playerNamesSection.classList.add('active');
-            
-            if (selectedMode === 'pvc') {
-                player2Group.style.display = 'none';
-                player2Input.value = 'Computer';
-            } else {
-                player2Group.style.display = 'block';
-                player2Input.value = '';
-            }
-            
-            updateStartButton();
+        button.addEventListener('click', function () {
+            handleModeSelect(this);
         });
     });
+
+    // Fallback delegation in case initial listeners fail
+    document.addEventListener('click', (e) => {
+        const btn = e.target.closest?.('.mode-btn');
+        if (btn) handleModeSelect(btn);
+    });
+
+    // Ensure initial state
+    updateStartButton();
     
     player1Input.addEventListener('input', updateStartButton);
     player2Input.addEventListener('input', updateStartButton);
