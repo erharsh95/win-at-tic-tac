@@ -92,23 +92,9 @@ function init() {
 
     console.log('UI ready. modeButtons:', modeButtons.length);
     modeButtons.forEach(button => {
-        ['click','touchend','pointerup'].forEach(evt => {
-            button.addEventListener(evt, function (e) {
-                e.preventDefault();
-                handleModeSelect(this);
-            }, { passive: false });
+        button.addEventListener('click', function () {
+            handleModeSelect(this);
         });
-    });
-
-    // Fallback delegation
-    ;['click','touchend','pointerup'].forEach(evt => {
-        document.addEventListener(evt, (e) => {
-            const btn = e.target.closest && e.target.closest('.mode-btn');
-            if (btn) {
-                e.preventDefault();
-                handleModeSelect(btn);
-            }
-        }, { passive: false });
     });
 
     // Default to PvP for convenience
@@ -118,8 +104,8 @@ function init() {
     // Ensure initial state
     updateStartButton();
     
-    ['input','change','keyup','paste'].forEach(evt => player1Input.addEventListener(evt, updateStartButton));
-    ['input','change','keyup','paste'].forEach(evt => player2Input.addEventListener(evt, updateStartButton));
+    player1Input.addEventListener('input', updateStartButton);
+    player2Input.addEventListener('input', updateStartButton);
     
     function updateStartButton() {
         const player1Valid = player1Input.value.trim().length > 0;
