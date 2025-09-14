@@ -254,6 +254,45 @@ body {
     color: white;
 }
 
+/* Touch devices - reduce hover effects */
+@media (hover: none) {
+    .mode-btn:hover {
+        transform: none;
+        box-shadow: none;
+    }
+    
+    .mode-btn:active {
+        transform: scale(0.98);
+        background: rgba(255, 255, 255, 0.2);
+    }
+    
+    .cell:hover:empty {
+        transform: none;
+    }
+    
+    .cell:active:empty {
+        transform: scale(0.95);
+        background: rgba(102, 126, 234, 0.15);
+    }
+    
+    .start-btn:hover:not(:disabled) {
+        transform: none;
+        box-shadow: none;
+    }
+    
+    .start-btn:active:not(:disabled) {
+        transform: scale(0.98);
+    }
+    
+    .control-btn:hover {
+        transform: none;
+    }
+    
+    .control-btn:active {
+        transform: scale(0.95);
+    }
+}
+
 .mode-btn:hover::before {
     left: 100%;
 }
@@ -544,79 +583,140 @@ body {
     transform: translateY(-1px);
 }
 
-/* Mobile Responsive */
-/* Enhanced responsive design */
+/* Mobile Responsive (Small screens) */
 @media (max-width: 480px) {
     body {
-        padding: 10px;
+        padding: 8px;
+        overflow-x: hidden;
     }
     
     .rgb-orb {
         filter: blur(40px);
     }
     
-    .rgb-orb:nth-child(1) { width: 200px; height: 200px; }
-    .rgb-orb:nth-child(2) { width: 150px; height: 150px; }
-    .rgb-orb:nth-child(3) { width: 120px; height: 120px; }
-    .rgb-orb:nth-child(4) { width: 180px; height: 180px; }
-    .rgb-orb:nth-child(5) { width: 100px; height: 100px; }
+    .rgb-orb:nth-child(1) { width: 150px; height: 150px; }
+    .rgb-orb:nth-child(2) { width: 120px; height: 120px; }
+    .rgb-orb:nth-child(3) { width: 100px; height: 100px; }
+    .rgb-orb:nth-child(4) { width: 140px; height: 140px; }
+    .rgb-orb:nth-child(5) { width: 80px; height: 80px; }
+    
+    .container {
+        max-width: 100%;
+        margin: 0 auto;
+    }
     
     .card {
-        padding: 20px;
-        border-radius: 20px;
+        padding: 16px;
+        border-radius: 16px;
+        margin: 8px;
     }
     
     .title {
-        font-size: 2rem;
-        margin-bottom: 20px;
+        font-size: 1.75rem;
+        margin-bottom: 16px;
+    }
+    
+    .section h2 {
+        font-size: 1.1rem;
+        margin-bottom: 16px;
     }
     
     .mode-buttons {
-        gap: 12px;
+        gap: 10px;
     }
     
     .mode-btn {
-        padding: 14px 16px;
-        font-size: 1rem;
-        border-radius: 12px;
+        padding: 12px 16px;
+        font-size: 0.95rem;
+        border-radius: 10px;
     }
     
     .mode-btn:hover {
-        transform: translateY(-2px) perspective(1000px) rotateX(3deg);
+        transform: translateY(-1px) perspective(1000px) rotateX(2deg);
     }
     
     .name-inputs {
         gap: 12px;
     }
     
+    .input-group {
+        gap: 6px;
+    }
+    
+    .input-group label {
+        font-size: 0.9rem;
+    }
+    
     .input-group input {
-        padding: 14px 15px;
-        font-size: 1rem;
+        padding: 12px 14px;
+        font-size: 0.95rem;
     }
     
     .start-btn {
-        padding: 14px;
-        font-size: 1.1rem;
+        padding: 12px;
+        font-size: 1rem;
+        margin-top: 8px;
+    }
+    
+    /* Game screen mobile adjustments */
+    .game-header {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    
+    .back-btn {
+        align-self: center;
+        padding: 8px 12px;
+        font-size: 0.9rem;
     }
     
     .players-info {
         flex-direction: column;
-        gap: 15px;
+        gap: 12px;
         text-align: center;
+        padding: 16px;
+        margin-bottom: 16px;
+    }
+    
+    .player-info {
+        padding: 8px;
+    }
+    
+    .player-name {
+        font-size: 0.9rem;
+    }
+    
+    .player-symbol {
+        font-size: 1.3rem;
+    }
+    
+    .player-score {
+        font-size: 1.1rem;
     }
     
     .vs {
         order: 2;
+        font-size: 1rem;
+    }
+    
+    .game-status {
+        font-size: 1rem;
+        margin-bottom: 20px;
+        padding: 8px;
     }
     
     .game-board {
-        max-width: 250px;
-        gap: 8px;
+        max-width: 280px;
+        gap: 6px;
+        margin-bottom: 20px;
     }
     
     .cell {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
         border-width: 2px;
+        border-radius: 10px;
     }
     
     .game-controls {
@@ -625,24 +725,20 @@ body {
     }
     
     .control-btn {
-        padding: 10px 15px;
+        padding: 10px 16px;
         font-size: 0.9rem;
-    }
-    
-    .game-header {
-        flex-direction: column;
-        gap: 15px;
-        text-align: center;
-    }
-    
-    .back-btn {
-        align-self: flex-start;
+        width: 100%;
     }
 }
 
+/* Tablet Responsive (Medium screens) */
 @media (min-width: 481px) and (max-width: 768px) {
+    body {
+        padding: 16px;
+    }
+    
     .container {
-        max-width: 420px;
+        max-width: 450px;
     }
     
     .rgb-orb {
@@ -650,26 +746,127 @@ body {
     }
     
     .card {
-        padding: 35px;
+        padding: 30px;
+        border-radius: 20px;
+    }
+    
+    .title {
+        font-size: 2.2rem;
+    }
+    
+    .mode-btn {
+        padding: 16px 20px;
+        font-size: 1.05rem;
     }
     
     .mode-btn:hover {
-        transform: translateY(-3px) perspective(1000px) rotateX(4deg);
+        transform: translateY(-2px) perspective(1000px) rotateX(3deg);
+    }
+    
+    .input-group input {
+        padding: 14px 16px;
+        font-size: 1.05rem;
+    }
+    
+    .start-btn {
+        padding: 16px;
+        font-size: 1.15rem;
+    }
+    
+    .players-info {
+        padding: 24px;
+        margin-bottom: 24px;
     }
     
     .game-board {
-        max-width: 280px;
+        max-width: 320px;
+        gap: 12px;
+    }
+    
+    .cell {
+        font-size: 1.8rem;
+    }
+    
+    .game-controls {
+        flex-direction: row;
+        gap: 12px;
+        justify-content: center;
+    }
+    
+    .control-btn {
+        padding: 12px 20px;
+        flex: 1;
+        max-width: 200px;
     }
 }
 
-/* Tablet Responsive */
-@media (min-width: 481px) and (max-width: 768px) {
+/* Desktop Responsive (Large screens) */
+@media (min-width: 769px) and (max-width: 1024px) {
     .container {
-        max-width: 400px;
+        max-width: 550px;
+    }
+    
+    .card {
+        padding: 45px;
+    }
+    
+    .title {
+        font-size: 2.8rem;
     }
     
     .game-board {
-        max-width: 280px;
+        max-width: 350px;
+    }
+    
+    .cell {
+        font-size: 2.2rem;
+    }
+}
+
+/* Large Desktop (Extra large screens) */
+@media (min-width: 1025px) {
+    .container {
+        max-width: 600px;
+    }
+    
+    .card {
+        padding: 50px;
+    }
+    
+    .title {
+        font-size: 3rem;
+    }
+    
+    .mode-btn {
+        padding: 18px 24px;
+        font-size: 1.2rem;
+    }
+    
+    .input-group input {
+        padding: 16px 20px;
+        font-size: 1.1rem;
+    }
+    
+    .start-btn {
+        padding: 18px;
+        font-size: 1.3rem;
+    }
+    
+    .game-board {
+        max-width: 400px;
+        gap: 15px;
+    }
+    
+    .cell {
+        font-size: 2.5rem;
+    }
+    
+    .players-info {
+        padding: 30px;
+    }
+    
+    .game-status {
+        font-size: 1.3rem;
     }
 }
 
