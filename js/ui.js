@@ -72,12 +72,12 @@ export class UIManager {
         this.selectedMode = buttonEl.dataset.mode;
         this.playerNamesSection.classList.add('active');
 
-        if (this.selectedMode === 'pvc') {
+        if (this.selectedMode === 'pvp') {
             this.player2Group.style.display = 'none';
-            this.player2Input.value = 'Computer';
+            this.player2Input.value = '';
         } else {
             this.player2Group.style.display = 'block';
-            this.player2Input.value = '';
+            this.player2Input.value = 'Computer';
         }
 
         this.updateStartButton();
