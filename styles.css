@@ -9,12 +9,14 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
     min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: 10px;
     position: relative;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 /* Animated RGB Background Elements */
@@ -134,8 +136,8 @@ body {
 
 .container {
     width: 100%;
-    max-width: 500px;
-    margin: 0 auto;
+    max-width: min(500px, 100vw - 20px);
+    margin: auto;
     position: relative;
     z-index: 2;
 }
@@ -144,7 +146,7 @@ body {
     background: rgba(15, 15, 35, 0.25);
     backdrop-filter: blur(25px);
     border-radius: 24px;
-    padding: 40px;
+    padding: 20px;
     box-shadow: 
         0 8px 32px rgba(0, 0, 0, 0.4),
         inset 0 1px 0 rgba(255, 255, 255, 0.1),
@@ -155,6 +157,8 @@ body {
     overflow: hidden;
     z-index: 1;
     transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .card:hover {
@@ -587,7 +591,6 @@ body {
 @media (max-width: 480px) {
     body {
         padding: 8px;
-        overflow-x: hidden;
     }
     
     .rgb-orb {
@@ -608,7 +611,6 @@ body {
     .card {
         padding: 16px;
         border-radius: 16px;
-        margin: 8px;
     }
     
     .title {
@@ -733,10 +735,6 @@ body {
 
 /* Tablet Responsive (Medium screens) */
 @media (min-width: 481px) and (max-width: 768px) {
-    body {
-        padding: 16px;
-    }
-    
     .container {
         max-width: 450px;
     }
