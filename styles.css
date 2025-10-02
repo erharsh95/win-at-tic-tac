@@ -418,8 +418,10 @@ body {
 
 .back-btn {
     padding: 10px 15px;
-    background: #f8f9fa;
-    border: 2px solid #ddd;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.9);
     border-radius: 10px;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -427,7 +429,8 @@ body {
 }
 
 .back-btn:hover {
-    background: #e9ecef;
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
     transform: translateY(-1px);
 }
 
@@ -437,7 +440,9 @@ body {
     align-items: center;
     margin-bottom: 20px;
     padding: 20px;
-    background: rgba(0, 0, 0, 0.05);
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 15px;
 }
 
@@ -450,7 +455,8 @@ body {
 }
 
 .player-info.active {
-    background: rgba(102, 126, 234, 0.1);
+    background: rgba(102, 126, 234, 0.2);
+    border: 1px solid rgba(102, 126, 234, 0.3);
     border-radius: 10px;
     padding: 10px;
 }
@@ -458,6 +464,7 @@ body {
 .player-name {
     font-weight: 600;
     font-size: 1rem;
+    color: rgba(255, 255, 255, 0.95);
 }
 
 .player-symbol {
@@ -466,22 +473,22 @@ body {
 }
 
 .player-x .player-symbol {
-    color: #667eea;
+    color: #8b9eff;
 }
 
 .player-o .player-symbol {
-    color: #764ba2;
+    color: #b47dd8;
 }
 
 .player-score {
     font-size: 1.2rem;
     font-weight: bold;
-    color: #333;
+    color: rgba(255, 255, 255, 0.95);
 }
 
 .vs {
     font-weight: bold;
-    color: #666;
+    color: rgba(255, 255, 255, 0.7);
     font-size: 1.2rem;
 }
 
@@ -490,9 +497,11 @@ body {
     margin-bottom: 30px;
     font-size: 1.2rem;
     font-weight: 600;
-    color: #333;
+    color: rgba(255, 255, 255, 0.95);
     padding: 10px;
-    background: rgba(102, 126, 234, 0.1);
+    background: rgba(102, 126, 234, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(102, 126, 234, 0.2);
     border-radius: 10px;
 }
 
@@ -509,8 +518,9 @@ body {
 
 .cell {
     aspect-ratio: 1;
-    background: white;
-    border: 3px solid #ddd;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border: 3px solid rgba(255, 255, 255, 0.3);
     border-radius: 15px;
     display: flex;
     align-items: center;
@@ -524,19 +534,20 @@ body {
 }
 
 .cell:hover:empty {
-    background: rgba(102, 126, 234, 0.1);
-    border-color: #667eea;
+    background: rgba(255, 255, 255, 1);
+    border-color: #8b9eff;
     transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(139, 158, 255, 0.3);
 }
 
 .cell.x {
     color: #667eea;
-    background: rgba(102, 126, 234, 0.1);
+    background: rgba(139, 158, 255, 0.15);
 }
 
 .cell.o {
     color: #764ba2;
-    background: rgba(118, 75, 162, 0.1);
+    background: rgba(180, 125, 216, 0.15);
 }
 
 .cell.winner {
@@ -573,8 +584,10 @@ body {
 
 .control-btn {
     padding: 12px 20px;
-    background: white;
-    border: 2px solid #ddd;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: #1a1a2e;
     border-radius: 10px;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -582,9 +595,10 @@ body {
 }
 
 .control-btn:hover {
-    background: #f8f9fa;
-    border-color: #667eea;
-    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 1);
+    border-color: #8b9eff;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(139, 158, 255, 0.3);
 }
 
 /* Mobile Responsive (Small screens) */
