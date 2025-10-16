@@ -107,8 +107,8 @@ body {
 /* Particle system */
 .particle {
     position: absolute;
-    width: 25px;
-    height: 25px;
+    width: 4px;
+    height: 4px;
     background: rgba(255, 255, 255, 0.8);
     border-radius: 50%;
     pointer-events: none;
